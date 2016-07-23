@@ -2,13 +2,22 @@
 #	Digunakan untuk membuat cluster baru maupun node baru
 
 # Format:
-#	./add_cluster.sh <exchange name> <queue name>
+#	./add_cluster.sh <rabbitmq-host> <vhost> <user> <password> <exchange>
 
 # Keterangan:
 #       exchange        = cluster
 #       queue           = node
 
 #!/bin/sh
+
+# assign variable from user input
+host=$1
+vhost=$2
+user=$3
+password=$4
+exchange=$5
+queue=$(hostname)
+durable=true 		# ganti false jika diinginkan
 
 # Install JDK
 wget https://raw.githubusercontent.com/akhfa/ta/master/script/install-jdk.sh
@@ -23,4 +32,18 @@ chmod +x install-logstash.sh
 # Install exchange (jika belum ada) dan queue untuk node ini
 wget https://raw.githubusercontent.com/akhfa/ta/master/script/add_exchange_queue.sh
 chmod +x add_exchange_queue.sh
-./add_exchange_queue.sh $1 $2
+./add_exchange_queue.sh $exchange $queue
+
+# Download config input logstash dan ubah parameter sesuai input user
+wget https://raw.githubusercontent.com/akhfa/ta/master/config/01-input-rabbitmq.conf
+sed -i "s/<host>/\"$host\"/" 01-input-rabbitmq.conf
+sed -i "s/<vhost>/\"$vhost\"/" 01-input-rabbitmq.conf
+sed -i "s/<user>/\"$user\"/" 01-input-rabbitmq.conf
+sed -i "s/<password>/\"$password\"/" 01-input-rabbitmq.conf
+sed -i "s/<exchange>/\"$exchange\"/" 01-input-rabbitmq.conf
+sed -i "s/<queue>/\"$queue\"/" 01-input-rabbitmq.conf
+sed -i "s/<durable>/\"$durable\"/" 01-input-rabbitmq.conf
+mv 01-input-rabbitmq.conf /etc/logstash/conf.d/
+
+# Download config output logstash dan ubah parameter sesuai input user
+# TBD
