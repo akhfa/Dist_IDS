@@ -10,6 +10,9 @@
 
 #!/bin/sh
 
+# Install dependensi
+yum install -y wget
+
 # assign variable from user input
 host=$1
 vhost=$2
