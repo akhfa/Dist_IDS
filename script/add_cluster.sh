@@ -38,7 +38,7 @@ chmod +x install-logstash.sh
 # Install exchange (jika belum ada) dan queue untuk node ini
 wget https://raw.githubusercontent.com/akhfa/ta/master/script/add_exchange_queue.sh
 chmod +x add_exchange_queue.sh
-./add_exchange_queue.sh $exchange $queue
+./add_exchange_queue.sh $host $vhost $user $password $exchange
 
 # Download config input logstash dan ubah parameter sesuai input user
 wget https://raw.githubusercontent.com/akhfa/ta/master/config/01-input-rabbitmq.conf

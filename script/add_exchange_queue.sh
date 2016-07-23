@@ -2,13 +2,24 @@
 # 	Digunakan untuk membuat exchange dan queue
 
 # Format: 
-#	./add_exchange_queue.sh <exchange name> <queue name>
+#	./add_exchange_queue.sh <rabbitmq-host> <vhost> <user> <password> <exchange>
 
-# Keterangan: 
-# 	exchange	= cluster
-# 	queue 		= node
+# Keterangan:
+#       host            = host dari rabbitmq
+#       vhost           = virtual host rabbitmq
+#       user            = user rabbitmq
+#       password        = password dari user rabbitmq
+#       exchange        = cluster
+
+# assign variable from user input
+host=$1
+vhost=$2
+user=$3
+password=$4
+exchange=$5
+queue=$(hostname)
 
 #!/bin/sh
-rabbitmqadmin -V ta -u ta -p BuatTA -H rabbitmq.akhfa.me declare exchange name=$1 type=fanout
-rabbitmqadmin -V ta -u ta -p BuatTA -H rabbitmq.akhfa.me declare queue name=$2 durable=true
-rabbitmqadmin -V ta -u ta -p BuatTA -H rabbitmq.akhfa.me declare binding source=$1 destination=$2
+rabbitmqadmin -V $vhost -u $user -p $password -H $host declare exchange name=$exchange type=fanout
+rabbitmqadmin -V $vhost -u $user -p $password -H $host declare queue name=$queue durable=true
+rabbitmqadmin -V $vhost -u $user -p $password -H $host declare binding source=$exchange destination=$queue
