@@ -2,11 +2,14 @@
 #	Digunakan untuk membuat cluster baru maupun node baru
 
 # Format:
-#	./add_cluster.sh <rabbitmq-host> <vhost> <user> <password> <exchange>
+#	./add_cluster.sh <host> <vhost> <user> <password> <exchange>
 
 # Keterangan:
+#	host		= host dari rabbitmq
+#	vhost		= virtual host rabbitmq
+#	user		= user rabbitmq
+# 	password	= password dari user rabbitmq
 #       exchange        = cluster
-#       queue           = node
 
 #!/bin/sh
 
