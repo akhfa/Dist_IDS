@@ -14,6 +14,7 @@
 #!/bin/sh
 
 # Install dependensi
+echo "Installing dependencies..."
 yum install -y wget
 
 # assign variable from user input
@@ -26,11 +27,13 @@ queue=$(hostname)
 durable=true 		# ganti false jika diinginkan
 
 # Install JDK
+echo "Installing Oracle JDK..."
 wget https://raw.githubusercontent.com/akhfa/ta/master/script/install-jdk.sh
 chmod +x install-jdk.sh
 ./install-jdk.sh
 
 # Install Logstash
+echo "Installing logstash..."
 https://raw.githubusercontent.com/akhfa/ta/master/script/install-logstash.sh
 chmod +x install-logstash.sh
 ./install-logstash.sh
@@ -53,3 +56,10 @@ mv 01-input-rabbitmq.conf /etc/logstash/conf.d/
 
 # Download config output logstash dan ubah parameter sesuai input user
 # TBD
+
+# Install iptables services (Firewalld akan dinonaktifkan)
+echo "Disabling firewalld and installing iptables-services"
+systemctl stop firewalld
+systemctl disable firewalld
+yum install iptables-services -y
+echo "Silahkan sesuaikan rules iptables dan start iptables"
