@@ -34,7 +34,7 @@ chmod +x install-jdk.sh
 
 # Install Logstash
 echo "Installing logstash and set logstash user as root..."
-https://raw.githubusercontent.com/akhfa/ta/master/script/install-logstash.sh
+wget https://raw.githubusercontent.com/akhfa/ta/master/script/install-logstash.sh
 chmod +x install-logstash.sh
 ./install-logstash.sh
 
