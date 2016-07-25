@@ -55,7 +55,8 @@ sed -i "s/<durable>/\"$durable\"/" 01-input-rabbitmq.conf
 mv 01-input-rabbitmq.conf /etc/logstash/conf.d/
 
 # Download config output logstash dan ubah parameter sesuai input user
-# TBD
+wget https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/01-output-file.conf
+mv 01-output-file.conf /etc/logstash/conf.d/
 
 # Install iptables services (Firewalld akan dinonaktifkan)
 echo "Disabling firewalld and installing iptables-services"
