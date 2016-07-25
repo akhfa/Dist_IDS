@@ -32,6 +32,11 @@ wget https://raw.githubusercontent.com/akhfa/ta/master/script/install-jdk.sh
 chmod +x install-jdk.sh
 ./install-jdk.sh
 
+# Install rabbitmqadmin untuk menambah exchange dan queue
+wget "http://$host:15672/cli/rabbitmqadmin"
+chmod +x rabbitmqadmin
+mv rabbitmqadmin /usr/bin
+
 # Install Logstash
 echo "Installing logstash and set logstash user as root..."
 wget https://raw.githubusercontent.com/akhfa/ta/master/script/install-logstash.sh
