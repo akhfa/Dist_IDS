@@ -18,6 +18,7 @@ echo "Installing dependencies..."
 yum install -y wget
 
 # assign variable from user input
+echo "assign variable"
 host=$1
 vhost=$2
 user=$3
@@ -33,6 +34,7 @@ chmod +x install-jdk.sh
 ./install-jdk.sh
 
 # Install rabbitmqadmin untuk menambah exchange dan queue
+echo "Install rabbitmqadmin"
 wget "http://$host:15672/cli/rabbitmqadmin"
 chmod +x rabbitmqadmin
 mv rabbitmqadmin /usr/bin
@@ -44,11 +46,13 @@ chmod +x install-logstash.sh
 ./install-logstash.sh
 
 # Install exchange (jika belum ada) dan queue untuk node ini
+echo "Adding exchange and queue"
 wget https://raw.githubusercontent.com/akhfa/ta/master/script/add_exchange_queue.sh
 chmod +x add_exchange_queue.sh
 ./add_exchange_queue.sh $host $vhost $user $password $exchange
 
 # Download config input logstash dan ubah parameter sesuai input user
+echo "Downloading logstash config"
 wget https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/01-input-rabbitmq.conf
 sed -i "s/<host>/\"$host\"/" 01-input-rabbitmq.conf
 sed -i "s/<vhost>/\"$vhost\"/" 01-input-rabbitmq.conf
@@ -60,6 +64,7 @@ sed -i "s/<durable>/\"$durable\"/" 01-input-rabbitmq.conf
 mv 01-input-rabbitmq.conf /etc/logstash/conf.d/
 
 # Download config output logstash dan ubah parameter sesuai input user
+echo "Downloading logstash config"
 wget https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/01-output-file.conf
 mv 01-output-file.conf /etc/logstash/conf.d/
 
