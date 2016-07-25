@@ -44,7 +44,7 @@ chmod +x add_exchange_queue.sh
 ./add_exchange_queue.sh $host $vhost $user $password $exchange
 
 # Download config input logstash dan ubah parameter sesuai input user
-wget https://raw.githubusercontent.com/akhfa/ta/master/config/01-input-rabbitmq.conf
+wget https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/01-input-rabbitmq.conf
 sed -i "s/<host>/\"$host\"/" 01-input-rabbitmq.conf
 sed -i "s/<vhost>/\"$vhost\"/" 01-input-rabbitmq.conf
 sed -i "s/<user>/\"$user\"/" 01-input-rabbitmq.conf
