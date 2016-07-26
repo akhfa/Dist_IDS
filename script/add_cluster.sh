@@ -59,7 +59,7 @@ echo "Adding exchange and queue"
 echo "Downloading logstash input config"
 wget https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/01-sqi-input.conf
 # input file log
-sed "s,<path>,\"/var/log/nginx/access_log\"," 01-sqi-input.conf
+sed -i "s,<path>,\"/var/log/nginx/access_log\"," 01-sqi-input.conf
 # Input general
 sed -i "s/<host>/\"$host\"/" 01-sqi-input.conf
 sed -i "s/<vhost>/\"$vhost\"/" 01-sqi-input.conf
