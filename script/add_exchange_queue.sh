@@ -18,9 +18,10 @@ vhost=$2
 user=$3
 password=$4
 exchange=$5
+exchange_type=$6
 queue=$(hostname)
 
 # add exchange dan queue pada server rabbitmq
-rabbitmqadmin -V $vhost -u $user -p $password -H $host declare exchange name=$exchange type=fanout
+rabbitmqadmin -V $vhost -u $user -p $password -H $host declare exchange name=$exchange type=$exchange_type
 rabbitmqadmin -V $vhost -u $user -p $password -H $host declare queue name=$queue durable=true
 rabbitmqadmin -V $vhost -u $user -p $password -H $host declare binding source=$exchange destination=$queue
