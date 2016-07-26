@@ -77,6 +77,14 @@ sed -i "s/<cluster-queue>/\"cluster-$queue\"/" 01-sqi-input.conf
 # mv conf file
 mv 01-sqi-input.conf /etc/logstash/conf.d/
 
+# Download filter config dan patterns
+wget https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/01-sqi-filter.conf
+sed -i "s/<pattern-path>/\"/etc/logstash/patterns\"/" 01-sqi-filter.conf
+mv 01-sqi-filter.conf /etc/logstash/conf.d/
+wget https://raw.githubusercontent.com/akhfa/ta/master/patterns/sqlinjection
+mkdir -p /etc/logstash/patterns
+mv sqlinjection /etc/logstash/patterns
+
 # Download config output logstash dan ubah parameter sesuai input user
 echo "Downloading logstash output config"
 wget https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/01-sqi-output.conf
