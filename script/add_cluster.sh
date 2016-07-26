@@ -65,7 +65,7 @@ sed -i "s/<host>/\"$host\"/" 01-sqi-input.conf
 sed -i "s/<vhost>/\"$vhost\"/" 01-sqi-input.conf
 sed -i "s/<user>/\"$user\"/" 01-sqi-input.conf
 sed -i "s/<password>/\"$password\"/" 01-sqi-input.conf
-sed -i "s/<durable>/\"$durable\"/" 01-sqi-input.conf
+sed -i "s/<durable>/$durable/" 01-sqi-input.conf
 # input untuk mendapatkan pattern dari rabbitmq
 sed -i "s/<pattern-exchange>/\"pattern-exchange\"/" 01-sqi-input.conf
 sed -i "s/<pattern-queue>/\"pattern-$queue\"/" 01-sqi-input.conf
@@ -85,7 +85,7 @@ sed -i "s/<host>/\"$host\"/" 01-sqi-output.conf
 sed -i "s/<vhost>/\"$vhost\"/" 01-sqi-output.conf
 sed -i "s/<user>/\"$user\"/" 01-sqi-output.conf
 sed -i "s/<password>/\"$password\"/" 01-sqi-output.conf
-sed -i "s/<durable>/\"$durable\"/" 01-sqi-output.conf
+sed -i "s/<durable>/$durable/" 01-sqi-output.conf
 
 # output cluster
 sed -i "s/<cluster-exchange>/\"$exchange\"/" 01-sqi-output.conf
