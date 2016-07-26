@@ -9,7 +9,7 @@
 #	vhost		= virtual host rabbitmq
 #	user		= user rabbitmq
 # 	password	= password dari user rabbitmq
-#       exchange        = cluster
+#   exchange    = cluster
 
 #!/bin/sh
 
@@ -54,36 +54,45 @@ sed -i '/#LS_USER=logstash/a LS_USER=root' /etc/sysconfig/logstash
 
 # Install exchange (jika belum ada) dan queue untuk node ini
 echo "Adding exchange and queue"
-./add_exchange_queue.sh $host $vhost $user $password $exchange
 
 # Download config input logstash dan ubah parameter sesuai input user
 echo "Downloading logstash input config"
-wget https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/01-input.conf
+wget https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/01-sqi-input.conf
 # input file log
-sed "s,<path>,\"/var/log/nginx/access_log\"," 01-input.conf
-
+sed "s,<path>,\"/var/log/nginx/access_log\"," 01-sqi-input.conf
 # Input general
-sed -i "s/<host>/\"$host\"/" 01-input.conf
-sed -i "s/<vhost>/\"$vhost\"/" 01-input.conf
-sed -i "s/<user>/\"$user\"/" 01-input.conf
-sed -i "s/<password>/\"$password\"/" 01-input.conf
-sed -i "s/<durable>/\"$durable\"/" 01-input.conf
-
-
+sed -i "s/<host>/\"$host\"/" 01-sqi-input.conf
+sed -i "s/<vhost>/\"$vhost\"/" 01-sqi-input.conf
+sed -i "s/<user>/\"$user\"/" 01-sqi-input.conf
+sed -i "s/<password>/\"$password\"/" 01-sqi-input.conf
+sed -i "s/<durable>/\"$durable\"/" 01-sqi-input.conf
 # input untuk mendapatkan pattern dari rabbitmq
-sed -i "s/<pattern-exchange>/\"pattern-exchange\"/" 01-input.conf
-sed -i "s/<pattern-queue>/\"pattern-queue\"/" 01-input.conf
-
+sed -i "s/<pattern-exchange>/\"pattern-exchange\"/" 01-sqi-input.conf
+sed -i "s/<pattern-queue>/\"pattern-$queue\"/" 01-sqi-input.conf
+./add_exchange_queue.sh $host $vhost $user $password pattern-exchange fanout pattern-$queue
 # Input untuk input cluster sebagai sumber dari exec iptables
-sed -i "s/<pattern-exchange>/\"$exchange\"/" 01-input.conf
-sed -i "s/<pattern-queue>/\"$exchange\"/" 01-input.conf
-
-mv 01-input.conf /etc/logstash/conf.d/
+sed -i "s/<cluster-exchange>/\"cluster-$exchange\"/" 01-sqi-input.conf
+sed -i "s/<cluster-queue>/\"cluster-$queue\"/" 01-sqi-input.conf
+./add_exchange_queue.sh $host $vhost $user $password cluster-$exchange fanout cluster-$queue
+# mv conf file
+mv 01-sqi-input.conf /etc/logstash/conf.d/
 
 # Download config output logstash dan ubah parameter sesuai input user
 echo "Downloading logstash output config"
-wget https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/01-output.conf
-mv 01-output.conf /etc/logstash/conf.d/
+wget https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/01-sqi-output.conf
+# output general
+sed -i "s/<host>/\"$host\"/" 01-sqi-output.conf
+sed -i "s/<vhost>/\"$vhost\"/" 01-sqi-output.conf
+sed -i "s/<user>/\"$user\"/" 01-sqi-output.conf
+sed -i "s/<password>/\"$password\"/" 01-sqi-output.conf
+sed -i "s/<durable>/\"$durable\"/" 01-sqi-output.conf
+
+# output cluster
+sed -i "s/<cluster-exchange>/\"$exchange\"/" 01-sqi-output.conf
+# output exchange ke elasticsearch
+sed -i "s/<elastic-exchange>/\"elastic\"/" 01-sqi-output.conf
+# mv config ke tempat seharusnya
+mv 01-sqi-output.conf /etc/logstash/conf.d/
 
 # Install iptables services (Firewalld akan dinonaktifkan)
 echo "Disabling firewalld and installing iptables-services"
