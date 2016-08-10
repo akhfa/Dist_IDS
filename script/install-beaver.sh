@@ -6,12 +6,14 @@ if [$1 == ""]; then
 	read -p "rabbitmq username:" -e rabbitmqUsername
 	read -p "rabbitmq password:" -e rabbitmqPassword
 	read -p "rabbitmq exchange:" -e rabbitmqExchange
+	read -p "rabbitmq queue:" -e rabbitmqQueue
 else
 	rabbitmqHost=$1
 	rabbitmqVhost=$2
 	rabbitmqUsername=$3
 	rabbitmqPassword=$4
 	rabbitmqExchange=$5
+	rabbitmqQueue=$6
 fi
 
 wget https://bootstrap.pypa.io/get-pip.py
@@ -26,5 +28,6 @@ sed -i "s/<rabbitmq-vhost>/$rabbitmqVhost/" beaver.conf
 sed -i "s/<rabbitmq-username>/$rabbitmqUsername/" beaver.conf
 sed -i "s/<rabbitmq-password>/$rabbitmqPassword/" beaver.conf
 sed -i "s/<rabbitmq-exchange>/$rabbitmqExchange/" beaver.conf
+sed -i "s/<rabbitmq-queue>/$rabbitmqQueue/" beaver.conf
 
 mv beaver.conf /etc/beaver/
