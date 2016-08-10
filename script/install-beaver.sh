@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "install pip dan beaver"
+
 if [$1 == ""]; then
 	read -p "rabbitmq host: " -e rabbitmqHost
 	read -p "rabbitmq vhost:" -e rabbitmqVhost
@@ -16,12 +18,12 @@ else
 	rabbitmqQueue=$6
 fi
 
-wget https://bootstrap.pypa.io/get-pip.py
+wget -q https://bootstrap.pypa.io/get-pip.py
 python get-pip.py
 pip install beaver==36.2.0
 mkdir /etc/beaver
 
-wget https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/beaver.conf
+wget -q https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/beaver.conf
 
 sed -i "s/<rabbitmq-host>/$rabbitmqHost/" beaver.conf
 sed -i "s/<rabbitmq-vhost>/$rabbitmqVhost/" beaver.conf
@@ -31,3 +33,7 @@ sed -i "s/<rabbitmq-exchange>/$rabbitmqExchange/" beaver.conf
 sed -i "s/<rabbitmq-queue>/$rabbitmqQueue/" beaver.conf
 
 mv beaver.conf /etc/beaver/
+
+rm -f get-pip.py
+
+echo "selesai install beaver"

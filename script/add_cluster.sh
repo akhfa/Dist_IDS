@@ -35,8 +35,8 @@ queue=$(hostname)
 durable=true 		# ganti false jika diinginkan
 
 # Download all script
-wget https://raw.githubusercontent.com/akhfa/ta/master/script/install-beaver.sh
-wget https://raw.githubusercontent.com/akhfa/ta/master/script/add_exchange_queue.sh
+wget -q https://raw.githubusercontent.com/akhfa/ta/master/script/install-beaver.sh
+wget -q https://raw.githubusercontent.com/akhfa/ta/master/script/add_exchange_queue.sh
 
 # Get exec permission
 chmod +x install-beaver.sh
@@ -53,3 +53,9 @@ systemctl disable firewalld
 yum install iptables-services -y
 echo "Buka port 5672"
 echo "Silahkan sesuaikan rules iptables dan start iptables"
+
+echo "hapus file tidak penting"
+rm -f install-beaver.sh
+rm -f add_exchange_queue.sh
+
+echo "Add cluster selesai dilakukan."
