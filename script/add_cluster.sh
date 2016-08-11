@@ -35,8 +35,8 @@ queue=$(hostname)
 durable=true 		# ganti false jika diinginkan
 
 # Download all script
-wget -q https://raw.githubusercontent.com/akhfa/ta/master/script/install-beaver.sh
-wget -q https://raw.githubusercontent.com/akhfa/ta/master/script/add_exchange_queue.sh
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/install-beaver.sh
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/add_exchange_queue.sh
 
 # Get exec permission
 chmod +x install-beaver.sh

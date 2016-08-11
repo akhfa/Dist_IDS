@@ -23,7 +23,7 @@ python get-pip.py
 pip install beaver==36.2.0
 mkdir /etc/beaver
 
-wget -q https://raw.githubusercontent.com/akhfa/ta/master/config/cluster/beaver.conf
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/config/cluster/beaver.conf
 
 sed -i "s/<rabbitmq-host>/$rabbitmqHost/" beaver.conf
 sed -i "s/<rabbitmq-vhost>/$rabbitmqVhost/" beaver.conf
