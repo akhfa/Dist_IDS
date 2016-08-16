@@ -8,7 +8,7 @@ read -p "Masukkan password administrator RabbitMQ: " password
 
 yum update -y
 yum install epel-release -y
-yum install htop wget erlang nginx certbot -y
+yum install htop wget erlang -y
 
 rpm --import https://www.rabbitmq.com/rabbitmq-signing-key-public.asc
 wget http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.5/rabbitmq-server-3.6.5-1.noarch.rpm
@@ -28,8 +28,13 @@ rabbitmqctl set_permissions -p / $username ".*" ".*" ".*"
 # http://stackoverflow.com/questions/22850546/cant-access-rabbitmq-web-management-interface-after-fresh-install
 rabbitmq-plugins enable rabbitmq_management
 
-# activate domain
-if [ $domain != '' ]; then
+# jika tanpa domain
+if [ "$domain" = "" ]; then
+	ip=`wget http://ip.akhfa.me -O - -q ;`
+	echo "RabbitMQ dapat diakses dari alamat http://$ip:15672"
+else
+	# jika ada domain
+	yum install nginx certbot -y
 	systemctl stop nginx
 	certbot certonly --standalone --register-unsafely-without-email --agree-tos -d rabbitmq.akhfa.me
 	wget https://raw.githubusercontent.com/akhfa/Dist_IDS/master/config/message%20broker/domain-nginx.conf
@@ -38,7 +43,4 @@ if [ $domain != '' ]; then
 	systemctl start nginx
 	systemctl enable nginx
 	echo "Rabbitmq dapat diakses dari alamat https://$domain"
-else
-	ip=`wget http://ip.akhfa.me -O - -q ;`
-	echo "RabbitMQ dapat diakses dari alamat http://$ip:15672"
 fi
