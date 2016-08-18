@@ -21,7 +21,7 @@ user=$3
 password=$4
 exchange=$5
 exchange_type=$6
-queue=7
+queue=$7
 
 # add exchange dan queue pada server rabbitmq
 rabbitmqadmin -V $vhost -u $user -p $password -H $host declare exchange name=$exchange type=$exchange_type
