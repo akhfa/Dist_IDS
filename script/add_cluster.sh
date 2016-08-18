@@ -12,10 +12,6 @@
 
 #!/bin/sh
 
-# Install dependensi
-echo "Installing dependencies..."
-yum install -y wget
-
 # assign variable from user input
 # exchange log karena script ini hanya digunakan untuk mengirim log ke rabbitmq
 echo "assign variable"
@@ -24,6 +20,7 @@ if [ "$1" == "" ]; then
 	read -p "RabbitMQ vhost: " -e vhost
 	read -p "RabbitMQ user: " -e user
 	read -p "RabbitMQ password: " -e password
+	read -p "Cluster name: " -e notifExchange
 else
 	host=$1
 	vhost=$2
@@ -34,9 +31,11 @@ exchange=log # Exchange tujuan pengiriman log
 queue=$(hostname)
 durable=true 		# ganti false jika diinginkan
 
-# exchange queue untuk notif
-notifExchange=Cluster
-notifQueue=Cluster$(hostname)
+notifQueue=$notifExchange-$(hostname)
+
+# Install dependensi
+echo "Installing dependencies..."
+yum install -y wget
 
 # Download all script
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/install-beaver.sh
@@ -49,6 +48,12 @@ chmod +x add_exchange_queue.sh
 # Install Beaver
 echo "Installing beaver..."
 ./install-beaver.sh $host $vhost $user $password $exchange $queue
+
+# Install rabbitmqadmin untuk menambah exchange dan queue
+echo "Installing rabbitmqadmin..."
+wget -q "http://$host:15672/cli/rabbitmqadmin"
+chmod +x rabbitmqadmin
+mv rabbitmqadmin /usr/bin
 
 # Menambahkan exchange queue untuk menerima notifikasi serangan
 ./add_exchange_queue.sh $host $vhost $user $password $notifExchange fanout $notifQueue
