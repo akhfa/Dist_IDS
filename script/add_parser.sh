@@ -2,7 +2,7 @@
 
 # assign variable from user input
 # exchange log karena script ini hanya digunakan untuk mengirim log ke rabbitmq
-if [$1 == ""]; then
+if [ "$1" == "" ]; then
 	read -p "RabbitMQ host: " -e host
 	read -p "RabbitMQ vhost: " -e vhost
 	read -p "RabbitMQ user: " -e user

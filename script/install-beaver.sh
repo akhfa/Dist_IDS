@@ -2,7 +2,7 @@
 
 echo "install pip dan beaver"
 
-if [$1 == ""]; then
+if [ "$1" == "" ]; then
 	read -p "rabbitmq host: " -e rabbitmqHost
 	read -p "rabbitmq vhost:" -e rabbitmqVhost
 	read -p "rabbitmq username:" -e rabbitmqUsername

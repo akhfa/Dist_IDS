@@ -19,7 +19,7 @@ yum install -y wget
 # assign variable from user input
 # exchange log karena script ini hanya digunakan untuk mengirim log ke rabbitmq
 echo "assign variable"
-if [$1 == ""]; then
+if [ "$1" == "" ]; then
 	read -p "RabbitMQ host: " -e host
 	read -p "RabbitMQ vhost: " -e vhost
 	read -p "RabbitMQ user: " -e user
@@ -30,9 +30,13 @@ else
 	user=$3
 	password=$4
 fi
-exchange=log
+exchange=log # Exchange tujuan pengiriman log
 queue=$(hostname)
 durable=true 		# ganti false jika diinginkan
+
+# exchange queue untuk notif
+notifExchange=Cluster
+notifQueue=Cluster$(hostname)
 
 # Download all script
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/install-beaver.sh
@@ -45,6 +49,9 @@ chmod +x add_exchange_queue.sh
 # Install Beaver
 echo "Installing beaver..."
 ./install-beaver.sh $host $vhost $user $password $exchange $queue
+
+# Menambahkan exchange queue untuk menerima notifikasi serangan
+./add_exchange_queue.sh $host $vhost $user $password $notifExchange fanout $notifQueue
 
 # Install iptables services (Firewalld akan dinonaktifkan)
 echo "Disabling firewalld and installing iptables-services"
