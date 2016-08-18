@@ -80,4 +80,8 @@ sed -i "s,LS_OPTS="",LS_OPTS="--auto-reload"," /etc/rc.d/init.d/logstash
 systemctl start logstash
 systemctl enable logstash
 
+rm -f add_exchange_queue.sh
+rm -f install-jdk.sh
+rm -f install-logstash.sh
+
 echo "Instalasi server parser selesai."
