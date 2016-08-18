@@ -1,12 +1,7 @@
 #!/bin/sh
 
-# Install dependensi
-echo "Installing dependencies..."
-yum install -y wget
-
 # assign variable from user input
 # exchange log karena script ini hanya digunakan untuk mengirim log ke rabbitmq
-echo "assign variable"
 if [$1 == ""]; then
 	read -p "RabbitMQ host: " -e host
 	read -p "RabbitMQ vhost: " -e vhost
@@ -22,7 +17,12 @@ exchange=log
 queue=$(hostname)
 durable=true 		# ganti false jika diinginkan
 
+# Install dependensi
+echo "Installing dependencies..."
+yum install -y wget
+
 # Download all script
+echo "Downloading all script"
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/install-jdk.sh
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/install-logstash.sh
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/add_exchange_queue.sh
@@ -73,5 +73,11 @@ sed -i "s/<pattern-queue>/\"pattern-$queue\"/" 01-sqi-input.conf
 
 # mv config ke logstash
 mv 01-sqi-input.conf /etc/logstash/conf.d/
+
+# set logstash autoreload config file
+sed -i "s,LS_OPTS="",LS_OPTS="--auto-reload"," /etc/rc.d/init.d/logstash
+
+systemctl start logstash
+systemctl enable logstash
 
 echo "Instalasi server parser selesai."
