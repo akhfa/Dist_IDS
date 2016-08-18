@@ -37,7 +37,7 @@ echo "Installing Oracle JDK..."
 ./install-jdk.sh
 
 # Install rabbitmqadmin untuk menambah exchange dan queue
-echo "Install rabbitmqadmin"
+echo "Installing rabbitmqadmin..."
 wget -q "http://$host:15672/cli/rabbitmqadmin"
 chmod +x rabbitmqadmin
 mv rabbitmqadmin /usr/bin
@@ -56,3 +56,4 @@ wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/config/cluster/0
 ./add_exchange_queue.sh $host $vhost $user $password elastic-false fanout elastic-false
 ./add_exchange_queue.sh $host $vhost $user $password pattern fanout pattern-$(hostname)
 
+echo "Instalasi server parser selesai."
