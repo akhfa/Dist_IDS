@@ -54,6 +54,24 @@ wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/config/cluster/0
 ./add_exchange_queue.sh $host $vhost $user $password log fanout log
 ./add_exchange_queue.sh $host $vhost $user $password elastic-true fanout elastic-true
 ./add_exchange_queue.sh $host $vhost $user $password elastic-false fanout elastic-false
-./add_exchange_queue.sh $host $vhost $user $password pattern fanout pattern-$(hostname)
+./add_exchange_queue.sh $host $vhost $user $password pattern fanout pattern-$queue
+
+# Download config input logstash dan ubah parameter sesuai input user
+echo "Downloading logstash input config"
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/config/parser/01-sqi-input.conf
+
+# Input general
+sed -i "s/<host>/\"$host\"/" 01-sqi-input.conf
+sed -i "s/<vhost>/\"$vhost\"/" 01-sqi-input.conf
+sed -i "s/<user>/\"$user\"/" 01-sqi-input.conf
+sed -i "s/<password>/\"$password\"/" 01-sqi-input.conf
+sed -i "s/<durable>/$durable/" 01-sqi-input.conf
+
+# input untuk mendapatkan pattern dari rabbitmq
+sed -i "s/<pattern-exchange>/\"pattern\"/" 01-sqi-input.conf
+sed -i "s/<pattern-queue>/\"pattern-$queue\"/" 01-sqi-input.conf
+
+# mv config ke logstash
+mv 01-sqi-input.conf /etc/logstash/conf.d/
 
 echo "Instalasi server parser selesai."
