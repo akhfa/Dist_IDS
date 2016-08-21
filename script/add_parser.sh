@@ -70,8 +70,6 @@ sed -i "s/<durable>/$durable/" 01-sqi-input.conf
 # input untuk mendapatkan pattern dari rabbitmq
 sed -i "s/<pattern-exchange>/\"pattern\"/" 01-sqi-input.conf
 sed -i "s/<pattern-queue>/\"pattern-$queue\"/" 01-sqi-input.conf
-
-# mv config ke logstash
 mv 01-sqi-input.conf /etc/logstash/conf.d/
 
 echo "Downloading filter config"
@@ -82,6 +80,20 @@ mv 01-sqi-filter.conf /etc/logstash/conf.d/
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/patterns/sqlinjection
 mkdir -p /etc/logstash/patterns
 mv sqlinjection /etc/logstash/patterns
+
+echo "Downloading output config"
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/config/parser/01-sqi-output.conf
+# Input general
+sed -i "s/<host>/\"$host\"/" 01-sqi-output.conf
+sed -i "s/<vhost>/\"$vhost\"/" 01-sqi-output.conf
+sed -i "s/<user>/\"$user\"/" 01-sqi-output.conf
+sed -i "s/<password>/\"$password\"/" 01-sqi-output.conf
+sed -i "s/<durable>/$durable/" 01-sqi-output.conf
+
+sed -i 's,<elastic-true>,"elastic-true",' 01-sqi-output.conf
+sed -i 's,<elastic-false>,"elastic-false",' 01-sqi-output.conf
+
+mv 01-sqi-output.conf /etc/logstash/config.d
 
 # set logstash autoreload config file
 sed -i "s,LS_OPTS="",LS_OPTS="--auto-reload"," /etc/rc.d/init.d/logstash
