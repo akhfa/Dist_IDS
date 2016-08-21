@@ -74,6 +74,15 @@ sed -i "s/<pattern-queue>/\"pattern-$queue\"/" 01-sqi-input.conf
 # mv config ke logstash
 mv 01-sqi-input.conf /etc/logstash/conf.d/
 
+echo "Downloading filter config"
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/config/parser/01-sqi-filter.conf
+
+sed -i "s/<pattern-path>/\"/etc/logstash/patterns\"/"
+mv 01-sqi-filter.conf /etc/logstash/conf.d/
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/patterns/sqlinjection
+mkdir -p /etc/logstash/patterns
+mv sqlinjection /etc/logstash/patterns
+
 # set logstash autoreload config file
 sed -i "s,LS_OPTS="",LS_OPTS="--auto-reload"," /etc/rc.d/init.d/logstash
 
