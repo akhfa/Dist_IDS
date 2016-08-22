@@ -74,8 +74,7 @@ mv 01-sqi-input.conf /etc/logstash/conf.d/
 
 echo "Downloading filter config"
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/config/parser/01-sqi-filter.conf
-
-sed -i "s/<pattern-path>/\"/etc/logstash/patterns\"/"
+sed -i "s,<pattern-path>,\"/etc/logstash/patterns\"," 01-sqi-filter.conf
 mv 01-sqi-filter.conf /etc/logstash/conf.d/
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/patterns/sqlinjection
 mkdir -p /etc/logstash/patterns
@@ -93,7 +92,7 @@ sed -i "s/<durable>/$durable/" 01-sqi-output.conf
 sed -i 's,<elastic-true>,"elastic-true",' 01-sqi-output.conf
 sed -i 's,<elastic-false>,"elastic-false",' 01-sqi-output.conf
 
-mv 01-sqi-output.conf /etc/logstash/config.d
+mv 01-sqi-output.conf /etc/logstash/conf.d
 
 # set logstash autoreload config file
 sed -i "s,LS_OPTS="",LS_OPTS="--auto-reload"," /etc/rc.d/init.d/logstash
