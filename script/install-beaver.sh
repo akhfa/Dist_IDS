@@ -9,6 +9,7 @@ if [ "$1" == "" ]; then
 	read -p "rabbitmq password:" -e rabbitmqPassword
 	read -p "rabbitmq exchange:" -e rabbitmqExchange
 	read -p "rabbitmq queue:" -e rabbitmqQueue
+	read -p "cluster name: " -e clusterName
 else
 	rabbitmqHost=$1
 	rabbitmqVhost=$2
@@ -16,6 +17,7 @@ else
 	rabbitmqPassword=$4
 	rabbitmqExchange=$5
 	rabbitmqQueue=$6
+	clusterName=$7
 fi
 
 wget -q https://bootstrap.pypa.io/get-pip.py
@@ -31,6 +33,7 @@ sed -i "s/<rabbitmq-username>/$rabbitmqUsername/" beaver.conf
 sed -i "s/<rabbitmq-password>/$rabbitmqPassword/" beaver.conf
 sed -i "s/<rabbitmq-exchange>/$rabbitmqExchange/" beaver.conf
 sed -i "s/<rabbitmq-queue>/$rabbitmqQueue/" beaver.conf
+sed -i "s/<cluster-name>/$clusterName" beaver.conf
 
 mv beaver.conf /etc/beaver/
 
