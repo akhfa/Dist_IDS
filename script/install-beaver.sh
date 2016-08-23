@@ -38,8 +38,8 @@ sed -i "s/<rabbitmq-queue>/$rabbitmqQueue/" beaver.conf
 sed -i "s/<cluster-name>/$clusterName/" beaver.conf
 sed -i "s,<log-location>,'$logLocation'," beaver.conf
 
-sed -i '412d'
-sed -i '412d'
+sed -i '412d' /usr/lib64/python2.7/site-packages/beaver/config.py
+sed -i '412d' /usr/lib64/python2.7/site-packages/beaver/config.py
 sed -i "s/fieldkeys/fields[0::2]/" /usr/lib64/python2.7/site-packages/beaver/config.py
 sed -i "s/fieldvalues/fields[1::2]/" /usr/lib64/python2.7/site-packages/beaver/config.py
 
