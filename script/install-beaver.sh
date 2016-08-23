@@ -36,7 +36,7 @@ sed -i "s/<rabbitmq-password>/$rabbitmqPassword/" beaver.conf
 sed -i "s/<rabbitmq-exchange>/$rabbitmqExchange/" beaver.conf
 sed -i "s/<rabbitmq-queue>/$rabbitmqQueue/" beaver.conf
 sed -i "s/<cluster-name>/$clusterName/" beaver.conf
-sed -i "s/<log-location>/$logLocation/" beaver.conf
+sed -i "s,<log-location>,$logLocation," beaver.conf
 
 mv beaver.conf /etc/beaver/
 
