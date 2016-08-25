@@ -37,6 +37,7 @@ sed -i "s/<rabbitmq-exchange>/$rabbitmqExchange/" beaver.conf
 sed -i "s/<rabbitmq-queue>/$rabbitmqQueue/" beaver.conf
 sed -i "s/<cluster-name>/$clusterName/" beaver.conf
 sed -i "s,<log-location>,$logLocation," beaver.conf
+sed -i "s/'//g" beaver.conf
 
 sed -i '412d' /usr/lib64/python2.7/site-packages/beaver/config.py
 sed -i '412d' /usr/lib64/python2.7/site-packages/beaver/config.py
