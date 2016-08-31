@@ -12,26 +12,28 @@ import java.io.IOException;
  * @author akhfa
  * Comments:
  *      Menerima pesan dari rabbitmq dengan param:
- *      1. exchange name
- *      2. queue name
+ *      0. host
+ *      1. virtualhost
+ *      2. username
+ *      3. password
+ *      4. exchange name
+ *      5. queue name
  */
 public class ReceiverCli {
 
   public static void main(String[] argv) throws Exception {
     ConnectionFactory factory = new ConnectionFactory();
-    factory.setHost("rabbitmq.akhfa.me");
-    factory.setUsername("ta");
-    factory.setPassword("BuatTA");
-    factory.setVirtualHost("ta");
+    factory.setHost(argv[0]);
+    factory.setUsername(argv[2]);
+    factory.setPassword(argv[3]);
+    factory.setVirtualHost(argv[1]);
     final Connection connection = factory.newConnection();
     final Channel channel = connection.createChannel();
     
     //                      exchange name, type, durable
-    channel.exchangeDeclare(argv[0], "fanout", true);
+    channel.exchangeDeclare(argv[4], "fanout", true);
 
-    System.err.println(argv[0]);
-    
-    channel.queueDeclare(argv[1], false, false, false, null);
+    channel.queueDeclare(argv[5], false, false, false, null);
     System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
     channel.basicQos(1);
@@ -50,7 +52,7 @@ public class ReceiverCli {
         }
       }
     };
-    channel.basicConsume(argv[0], false, consumer);
+    channel.basicConsume(argv[4], false, consumer);
   }
 
   private static void doWork(String task) {
