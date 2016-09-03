@@ -23,9 +23,9 @@ yum install -y wget
 
 # Download all script
 echo "Downloading all script"
-wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/install-jdk.sh
-wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/install-logstash.sh
-wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/add_exchange_queue.sh
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/others/install-jdk.sh
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/others/install-logstash.sh
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/others/add_exchange_queue.sh
 
 # Get exec permission
 chmod +x install-jdk.sh

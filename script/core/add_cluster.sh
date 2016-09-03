@@ -42,8 +42,8 @@ echo "Installing dependencies..."
 yum install -y wget
 
 # Download all script
-wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/install-beaver.sh
-wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/add_exchange_queue.sh
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/others/install-beaver.sh
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/others/add_exchange_queue.sh
 
 # Get exec permission
 chmod +x install-beaver.sh
