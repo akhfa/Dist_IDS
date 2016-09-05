@@ -7,6 +7,4 @@ rpm --import http://packages.elastic.co/GPG-KEY-elasticsearch
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/repo/elasticsearch.repo
 mv elasticsearch.repo /etc/yum.repos.d/elasticsearch.repo
 yum install elasticsearch -y
-systemctl start elasticsearch
-systemctl enable elasticsearch
 echo "Install elasticsearch selesai!"
