@@ -1,2 +1,8 @@
-HAI hai
-HALO halo
+SQI1 '\s*--(\s|')
+SQI2 '\s*(and|or|xor|&&|\|\|)\s*\(?\s*('|[0-9]|`?[a-z\._-]+`?\s*(=|like)|[a-z]+\s*\()
+SQI3 '\s*(not\s+)?in\s*\(\s*['0-9]
+SQI4 union(\s+all)?(\s*\(\s*|\s+)select(`|\s)
+SQI5 select(\s*`|\s+)(\*|[a-z0-9_\, ]*)(`\s*|\s+)from(\s*`|\s+)[a-z0-9_\.]*
+SQI6 insert\s+into(\s*`|\s+).*(`\s*|\s+)(values\s*)?\(.*\)
+SQI7 update(\s*`|\s+)[a-z0-9_\.]*(`\s*|\s+)set(\s*`|\s+).*=
+SQI8 delete\s+from(\s*`|\s+)[a-z0-9_\.]*`?
