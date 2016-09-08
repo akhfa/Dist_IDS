@@ -9,6 +9,8 @@
 #	vhost		= virtual host rabbitmq
 #	user		= user rabbitmq
 # 	password	= password dari user rabbitmq
+#	clusterName	= nama cluster
+#	logLocation	= lokasi log yang ingin dimonitor
 
 #!/bin/sh
 
@@ -43,11 +45,9 @@ yum install -y wget
 
 # Download all script
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/others/install-beaver.sh
-# wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/others/add_exchange_queue.sh
 
 # Get exec permission
 chmod +x install-beaver.sh
-# chmod +x add_exchange_queue.sh
 
 # Install Beaver
 echo "Installing beaver..."
@@ -60,7 +60,6 @@ chmod +x rabbitmqadmin
 mv rabbitmqadmin /usr/bin
 
 # Menambahkan exchange queue untuk menerima notifikasi serangan
-# ./add_exchange_queue.sh $host $vhost $user $password $notifExchange direct $notifQueue
 
 # add beaver service
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/config/cluster/beaver.service
@@ -79,6 +78,5 @@ echo "Silahkan sesuaikan rules iptables dan start iptables"
 
 echo "hapus file tidak penting"
 rm -f install-beaver.sh
-# rm -f add_exchange_queue.sh
 
 echo "Add cluster selesai dilakukan."
