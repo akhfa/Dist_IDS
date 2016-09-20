@@ -6,10 +6,11 @@ SQI5 select(\s*`|\s+)(\*|[a-z0-9_\, ]*)(`\s*|\s+)from(\s*`|\s+)[a-z0-9_\.]*
 SQI6 insert\s+into(\s*`|\s+).*(`\s*|\s+)(values\s*)?\(.*\)
 SQI7 update(\s*`|\s+)[a-z0-9_\.]*(`\s*|\s+)set(\s*`|\s+).*=
 SQI8 delete\s+from(\s*`|\s+)[a-z0-9_\.]*`?
-SQI9 \s*(AND|OR|XOR|&&|\|\|)\s*\(?\s*('|[0-9]|`?[a-z\._-]+`?\s*(=|LIKE)|[a-z]+\s*\()
+SQI9 \s*(AND|OR|XOR|&&|\|\|)\s*\(?\s*('|[0-9]|`?[A-Z\._-]+`?\s*(=|LIKE)|[A-Z]+\s*\()
 SQI10 \s*(NOT\s+)?IN\s*\(\s*['0-9]
 SQI11 UNION(\s+ALL)?(\s*\(\s*|\s+)SELECT(`|\s)
-SQI12 SELECT(\s*`|\s+)(\*|[a-z0-9_\, ]*)(`\s*|\s+)FROM(\s*`|\s+)[a-z0-9_\.]*
+SQI12 SELECT(\s*`|\s+)(\*|[A-Z0-9_\, ]*)(`\s*|\s+)FROM(\s*`|\s+)[A-Z0-9_\.]*
 SQI13 INSERT\s+INTO(\s*`|\s+).*(`\s*|\s+)(VALUES\s*)?\(.*\)
-SQI14 UPDATE(\s*`|\s+)[a-z0-9_\.]*(`\s*|\s+)SET(\s*`|\s+).*=
-SQI15 DELETE\s+FROM(\s*`|\s+)[a-z0-9_\.]*`?
+SQI14 UPDATE(\s*`|\s+)[A-Z0-9_\.]*(`\s*|\s+)SET(\s*`|\s+).*=
+SQI15 DELETE\s+FROM(\s*`|\s+)[A-Z0-9_\.]*`?
+SQI16 SELECT(\s*`|\s+)(\*|[A-Z0-9_\, ]*)
