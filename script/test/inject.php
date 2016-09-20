@@ -86,4 +86,6 @@ echo "</ul>\n";
 // connection when it exits, but let's just do it anyways
 $result->free();
 $mysqli->close();
+
+echo "<nama-cluster>";
 ?>
