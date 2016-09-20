@@ -1,0 +1,12 @@
+[Unit]
+Description=Blocker Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/opt/blocker/blocker.jar <host> <vhost> <user> <password> <notif-exchange> <notif-queue> <cluster-name> <block-long>
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
