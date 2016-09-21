@@ -56,10 +56,12 @@ yum install -y wget git
 # Download all script
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/others/install-beaver.sh
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/others/install_lamp.sh
+wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/others/install-jdk.sh
 
 # Get exec permission
 chmod +x install-beaver.sh
 chmod +x install_lamp.sh
+chmod +x install-jdk.sh
 
 # Install rabbitmqadmin untuk menambah exchange dan queue
 echo "Installing rabbitmqadmin..."
@@ -95,11 +97,16 @@ mv beaver.service /etc/systemd/system/
 systemctl start beaver
 systemctl enable beaver
 
+# install java
+echo "Installing java"
+./install-jdk.sh
+
 # Install blocker
 echo "install blocker"
 wget -q https://github.com/akhfa/Rm-blocker/releases/download/1.0.1/blocker.tar.gz
 tar xzf blocker.tar.gz
 mv blocker /opt/
+chown -R root:root /opt/blocker
 
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/config/cluster/blocker.service
 sed -i "s/<host>/$host/" blocker.service
@@ -114,18 +121,23 @@ mv blocker.service /etc/systemd/system/
 
 wget -q https://raw.githubusercontent.com/akhfa/Dist_IDS/master/script/others/blocker.sh
 mv blocker.sh /opt/blocker/
+systemctl start blocker
+systemctl enable blocker
 
 # Install iptables services (Firewalld akan dinonaktifkan)
 echo "Disabling firewalld and installing iptables-services"
 systemctl stop firewalld
 systemctl disable firewalld
 yum install iptables-services -y
-echo "Buka port 5672"
-echo "Silahkan sesuaikan rules iptables dan start iptables"
+sed -i "s/22/5223/" /etc/sysconfig/iptables
+systemctl start iptables
+systemctl enable iptables
+echo "Silahkan sesuaikan rules iptables sesuai kebutuhan"
 
 echo "Menghapus file tidak penting..."
 rm -f install-beaver.sh
 rm -f install_lamp.sh
 rm -f blocker.tar.gz
+rm -f install-jdk.sh
 
 echo "Add cluster selesai dilakukan."
