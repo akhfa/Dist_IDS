@@ -140,4 +140,6 @@ rm -f install_lamp.sh
 rm -f blocker.tar.gz
 rm -f install-jdk.sh
 
+iptables -I INPUT 4 -p tcp --dport 80 -j ACCEPT
+
 echo "Add cluster selesai dilakukan."
