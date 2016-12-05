@@ -9,4 +9,7 @@ alternatives --install /usr/bin/jar jar /opt/jdk1.8.0_91/bin/jar 2
 alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_91/bin/javac 2
 alternatives --set jar /opt/jdk1.8.0_91/bin/jar
 alternatives --set javac /opt/jdk1.8.0_91/bin/javac
+ln -s /opt/jdk1.8.0_91 /opt/jdk-latest
+echo "JAVA_HOME=/opt/jdk-latest" >> ~/.bash_profile
+source ~/.bash_profile
 echo "Install java selesai!"
